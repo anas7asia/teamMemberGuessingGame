@@ -1,42 +1,24 @@
 "use strict";
 
-var btnAxel = document.getElementById('btn-axel');
-var btnMyriam = document.getElementById('btn-myriam');
-var btnNoe = document.getElementById('btn-noe');
-var btnAlexis = document.getElementById('btn-alexis');
-var btnJerome = document.getElementById('btn-jerome');
-var btnYoan = document.getElementById('btn-yoan');
-var btnJen = document.getElementById('btn-jen');
-var btnBrice = document.getElementById('btn-brice');
-var btnThb = document.getElementById('btn-thb');
-var btnDamienV = document.getElementById('btn-damien-v');
-var btnCarine = document.getElementById('btn-carine');
-var btnDamienM = document.getElementById('btn-damien-m');
-var btnAlxdr = document.getElementById('btn-alxdr');
-var btnBaptiste = document.getElementById('btn-baptiste');
-var btnHug = document.getElementById('btn-hug');
-var btnSeb = document.getElementById('btn-seb');
-var btnArnaud = document.getElementById('btn-arnaud');
-var btnAnst = document.getElementById('btn-anst');
-
 var imgArr = [
-    {url : 'img/alexandre_carrere.jpg', name : 'Alexandre'},
-    {url : 'img/alexis.jpg', name : 'Alexis'},
-    {url : 'img/anastasia_oudin.jpg', name : 'Anastasia'},
-    {url : 'img/axel_darraba.jpg', name : 'Axel'},
+    {url : 'img/alexis.png', name : 'Alexis'},
+    {url : 'img/anastasia.png', name : 'Anastasia'},
+    {url : 'img/arnaud.png', name : 'Arnaud'},
+    {url : 'img/axel.png', name : 'Axel'},
     {url : 'img/baptiste.png', name : 'Baptiste'},
-    {url : 'img/carine.jpg', name : 'Carine'},
-    {url : 'img/damienMachado.jpg', name : 'Damien M.'},
+    {url : 'img/brice.png', name : 'Brice'},
+    {url : 'img/carine.png', name : 'Carine'},
+    {url : 'img/damien-m.png', name : 'Damien M.'},
+    {url : 'img/damien-v.png', name : 'Damien V.'},
     {url : 'img/hugues.png', name : 'Hugues'},
-    {url : 'img/jennifer_villeroy.jpg', name : 'Jennifer'},
-    {url : 'img/jerome_boucherie.jpg', name : 'Jerome'},
-    {url : 'img/noe.jpg', name : 'Noé'},
+    {url : 'img/jennifer.png', name : 'Jennifer'},
+    {url : 'img/jerome.png', name : 'Jerome'},
+    {url : 'img/myriam.png', name : 'Myriam'},
+    {url : 'img/noe.png', name : 'Noé'},
     {url : 'img/seb.png', name : 'Sebastien'},
-    {url : 'img/thibaut.jpg', name : 'Thibaut'},
-    {url : 'img/yoan.jpg', name : 'Yoan'},
-    {url : 'img/brice.jpg', name : 'Brice'},
-    {url : 'img/myriam.jpg', name : 'Myriam'},
-    {url : 'img/arnaud.jpg', name : 'Arnaud'}
+    {url : 'img/thibaut.png', name : 'Thibaut'},
+    {url : 'img/yoan.png', name : 'Yoan'},
+    {url : 'img/alexandre.png', name : 'Alexandre'}   
 ];
 
 var correctAnswer = [
@@ -50,17 +32,20 @@ var correctAnswer = [
 ];
 
 var incorrectAnswer = [
-    'No...',
+    'Non...',
     'Mais ça va pas, non?',
-    "C'est incorrect",
-    'Demande son prénom pendant la pause',
-    "N'hésite pas à redemander son prénom",
+    "Incorrect.",
     "Tu t'es trompé :(",
     'Oh la la!',
-    'Dommage'
+    'Dommage.',
+    'Mais non!',
+    'Mauvaise réponse...',
+    'Pas de chance!',
+    'No'
 ];
 
 var img = document.getElementById('imgToGuess');
+var btnContainer = document.getElementById('btn-container');
 var count = 0;
 var score = 0;
 var teamQuantity = document.getElementById('teamQuantity');
@@ -68,8 +53,9 @@ var phrase = document.getElementById('phrase');
 var restartBtn = document.getElementById('restart-btn');
 
 
-// inserts first image dynamically and shuffles img array
+// creates buttons, inserts first image dynamically and shuffles img array
 function setEnvironment() {
+    createButtons();
     shuffle(imgArr); // arrange array randomly
     count = 0; 
     score= 0;
@@ -83,15 +69,32 @@ function setEnvironment() {
 setEnvironment(); // call this function on document load
 
 
+function createButtons() {
+    // sorts imgArr alphabetically to to set buttons order properly
+    imgArr.sort(function(a, b) {
+        return a.name.localeCompare(b.name);
+    });
+
+    for (var i=0; i < imgArr.length; ++i) {
+        var personBtn = document.createElement('button');
+        personBtn.className = 'btn btn-default';
+        personBtn.innerHTML = imgArr[i]['name'];
+        personBtn.addEventListener('click', function(){countScore(this); restToGuess(); onBtnClick();}, false);
+        btnContainer.appendChild(personBtn);
+    }
+}
+
+// sorts imgArr randomly
+// @param (array) initial image array
 function shuffle(myArr) {
   myArr.sort(function() { 
       return (0.5 - Math.random());
   });
 }
 
-
+// counting function
+// when last image was guessed, the result will be shown 
 function onBtnClick() {
-    
     if (count === imgArr.length - 1) {
         img.src = "img/gameOver.jpg";
         showResult();
@@ -102,6 +105,8 @@ function onBtnClick() {
     } 
 }
 
+// counts good answers and number of guesses
+// @param (string) btn is an html tag to get value from
 function countScore(btn) {
     var correctAnswer = btn.innerHTML;
     
@@ -115,10 +120,13 @@ function countScore(btn) {
     }
 }
 
+// backward counting
 function restToGuess() {
     teamQuantity.innerHTML = (imgArr.length - 1) - count;
 }
 
+// inserts random phrase, if this phrase was showns previously,
+// it will try to choose a new one 
 function insertCorrectPhrase() {
     var randomNum = Math.floor(Math.random() * (correctAnswer.length - 1));
     var alreadyThereRight = phrase.innerHTML;
@@ -129,32 +137,32 @@ function insertCorrectPhrase() {
     }  
 }
 
+// same as previous
 function insertIncorrectPhrase() {
     var randomNumber = Math.floor(Math.random() * (incorrectAnswer.length - 1));
     var alreadyThereWrong = phrase.innerHTML;
     if (incorrectAnswer[randomNumber] === alreadyThereWrong) {
         insertIncorrectPhrase();
     } else {
-        phrase.innerHTML = incorrectAnswer[randomNumber];
+        phrase.innerHTML = incorrectAnswer[randomNumber] + " C'était " + imgArr[count].name;
     }
 }
 
 function changeAlertRight() {
-    phrase.className += " alert-success";
-    phrase.className = phrase.className.replace( /(?:^|\s)alert-danger(?!\S)/g , '' );
-    
+    phrase.className = "alert alert-success";    
 }
 
 function changeAlertWrong() {
-    phrase.className += " alert-danger";
-    phrase.className = phrase.className.replace( /(?:^|\s)alert-success(?!\S)/g , '' );
-
+    phrase.className = "alert alert-danger";
 }
 
 function showResult() {
-    // clear every div styling
-    phrase.className = phrase.className.replace( /(?:^|\s)alert-danger(?!\S)/g , '' );
-    phrase.className = phrase.className.replace( /(?:^|\s)alert-success(?!\S)/g , '' );
+    // clear every div styling, should keep it
+    phrase.className = "alert";
+    // empty button container
+    while (btnContainer.firstChild) {
+        btnContainer.removeChild(btnContainer.firstChild);
+    }
     
     
     if (score <= 5) {
@@ -178,42 +186,6 @@ function showResult() {
     restartBtn.className = restartBtn.className.replace( /(?:^|\s)restart-btn_hidden(?!\S)/g , '' );
 }
 
-
-btnAlxdr.addEventListener('click', function(){countScore(btnAlxdr); restToGuess(); onBtnClick();});
-
-btnAlexis.addEventListener('click', function(){countScore(btnAlexis); restToGuess(); onBtnClick();});
-
-btnAnst.addEventListener('click', function(){countScore(btnAnst); restToGuess(); onBtnClick();});
-
-btnArnaud.addEventListener('click', function(){countScore(btnArnaud); restToGuess(); onBtnClick();});
-
-btnAxel.addEventListener('click', function(){countScore(btnAxel); restToGuess(); onBtnClick();});
-
-btnBaptiste.addEventListener('click', function(){countScore(btnBaptiste); restToGuess(); onBtnClick();});
-
-btnBrice.addEventListener('click', function(){countScore(btnBrice); restToGuess(); onBtnClick();});
-
-btnCarine.addEventListener('click', function(){countScore(btnCarine); restToGuess(); onBtnClick();});
-
-btnDamienM.addEventListener('click', function(){countScore(btnDamienM); restToGuess(); onBtnClick();});
-
-btnHug.addEventListener('click', function(){countScore(btnHug); restToGuess(); onBtnClick();});
-
-btnJen.addEventListener('click', function(){countScore(btnJen); restToGuess(); onBtnClick();});
-
-btnJerome.addEventListener('click', function(){countScore(btnJerome); restToGuess(); onBtnClick();});
-
-btnMyriam.addEventListener('click', function(){countScore(btnMyriam); restToGuess(); onBtnClick();});
-
-btnNoe.addEventListener('click', function(){countScore(btnNoe); restToGuess(); onBtnClick();});
-
-btnSeb.addEventListener('click', function(){countScore(btnSeb); restToGuess(); onBtnClick();});
-
-btnThb.addEventListener('click', function(){countScore(btnThb); restToGuess(); onBtnClick();});
-
-btnYoan.addEventListener('click', function(){countScore(btnYoan); restToGuess(); onBtnClick();});
-
-
-
+// this button is created manually in html document 
 restartBtn.addEventListener('click', function(){setEnvironment();});
 

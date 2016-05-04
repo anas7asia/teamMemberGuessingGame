@@ -28,65 +28,30 @@
         <p class="lead">Essay de deviner tous les prénoms</p>
         
         <div class="col-xs-12 col-md-6">
+            <!-- src is appended by the script -->
             <img id="imgToGuess" src="" height="350px" width="auto">
         
+            <!-- this number is generated diynamically -->
             <p class="guesses">Prénoms restants : <span id="teamQuantity">0</span></p>
+
             
         </div>
         
             
-        
-        
         <div class="col-xs-12 col-md-6">
             
+            <!-- clickable buttons will be generated here -->
+            <p id="btn-container"></p>   
             
-            <p><button id="btn-alxdr" type="button" class="btn btn-default">Alexandre</button>
-            
-            <button id="btn-alexis" type="button" class="btn btn-default">Alexis</button>
-            
-            <button id="btn-anst" type="button" class="btn btn-default">Anastasia</button>
-            
-            <button id="btn-arnaud" type="button" class="btn btn-default">Arnaud</button>
-            
-            <button id="btn-axel" type="button" class="btn btn-default">Axel</button>
-            
-            <button id="btn-baptiste" type="button" class="btn btn-default">Baptiste</button></p>
-            
-            <p><button id="btn-brice" type="button" class="btn btn-default">Brice</button>
-            
-            <button id="btn-carine" type="button" class="btn btn-default">Carine</button>
-            
-            <button id="btn-damien-m" type="button" class="btn btn-default">Damien M.</button>
-            
-            <button id="btn-damien-v" type="button" class="btn btn-default" disabled="disabled">Damien V.</button>
-            
-            <button id="btn-hug" type="button" class="btn btn-default">Hugues</button>
-            
-            <button id="btn-jen" type="button" class="btn btn-default">Jennifer</button></p>
-            
-            <p><button id="btn-jerome" type="button" class="btn btn-default">Jerome</button>
-            
-            <button id="btn-myriam" type="button" class="btn btn-default">Myriam</button>
-            
-            <button id="btn-noe" type="button" class="btn btn-default">Noé</button>
-            
-            <button id="btn-seb" type="button" class="btn btn-default">Sebastien</button>
-            
-            <button id="btn-thb" type="button" class="btn btn-default">Thibaut</button>
-            
-            <button id="btn-yoan" type="button" class="btn btn-default">Yoan</button></p>   
-            
+            <!-- this phrase will show the result and correct answer -->
             <div id="phrase" class="" role="alert"></div>
             
+            <!-- restart button -->
             <button id="restart-btn" type="button">Recommencer?</button>
             
         </div>
     </div>   
       
-      
-      
-      
-
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
